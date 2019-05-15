@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ClickOutside from "react-simple-click-outside";
 import { Remove } from "../../images";
 import './SuggestionBox.css';
 
@@ -37,6 +38,12 @@ class SuggestionBox extends Component {
     this.setState({
       highlight: val
     })
+  }
+
+  closeSuggestions = () => {
+    const { showUsersList } = this.props;
+    if(showUsersList)
+    this.props.showSuggestionList(false);
   }
 
   checkBlank = (e) => {
@@ -147,9 +154,11 @@ class SuggestionBox extends Component {
 
   render() {
     return (
-      <div className="suggestion-container">
-        {this.renderChildren()}
-      </div>
+      <ClickOutside close={this.closeSuggestions}>
+        <div className="suggestion-container">
+          {this.renderChildren()}
+        </div>
+      </ClickOutside>
     );
   }
 }
