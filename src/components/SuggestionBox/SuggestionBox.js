@@ -18,8 +18,9 @@ class SuggestionBox extends Component {
       this.setState({
         searchString: "",
         removeUser: false
+      }, () => {
+        this.props.addUser(user);
       });
-      this.props.addUser(user);
     } else {
       alert("You have already added this user. Please choose different one");
     }
@@ -64,7 +65,11 @@ class SuggestionBox extends Component {
       if (!searchString && key === 8 && !highlight) {
         this.resetHighlight(true);
       } else if (!searchString && key === 8 && highlight) {
-        removeUser(addedUserList.length - 1);
+        this.setState({
+          removeUser: false
+        }, () => {
+          removeUser(addedUserList.length - 1);
+        });
       }
     }
   };
