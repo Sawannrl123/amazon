@@ -11,6 +11,7 @@ class SuggestionBox extends Component {
   addUser = (e, user) => {
     e.preventDefault();
     const { addedUserList } = this.props;
+    this.resetHighlight(false);
     if (!addedUserList.includes(user)) {
       this.setState({
         searchString: ""
@@ -32,15 +33,19 @@ class SuggestionBox extends Component {
     });
   };
 
+  resetHighlight = (val) => {
+    this.setState({
+      highlight: val
+    })
+  }
+
   checkBlank = (e) => {
     const { searchString, highlight } = this.state;
     const { addedUserList, removeUser } = this.props;
     const key = e.which || e.keyCode;
     if(addedUserList && addedUserList.length) {
       if (!searchString && key === 8 && !highlight) {
-        this.setState({
-          highlight: true
-        })
+        this.resetHighlight(true);
       } else if(!searchString && key === 8 && highlight) {
         removeUser(addedUserList.length - 1);
       }
