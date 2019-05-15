@@ -6,7 +6,8 @@ import './SuggestionBox.css';
 class SuggestionBox extends Component {
   state = {
     searchString: "",
-    highlight: false
+    highlight: false,
+    removeUser: false
   };
 
   addUser = (e, user) => {
@@ -15,7 +16,8 @@ class SuggestionBox extends Component {
     this.resetHighlight(false);
     if (!addedUserList.includes(user)) {
       this.setState({
-        searchString: ""
+        searchString: "",
+        removeUser: false
       });
       this.props.addUser(user);
     } else {
@@ -25,12 +27,17 @@ class SuggestionBox extends Component {
 
   removeUser = (e, index) => {
     e.preventDefault();
-    this.props.removeUser(index);
+    this.setState({
+      removeUser: true
+    }, () => {
+      this.props.removeUser(index);
+    });
   };
 
   handleChange = e => {
     this.setState({
-      searchString: e.target.value
+      searchString: e.target.value,
+      removeUser: false
     });
   };
 
@@ -42,7 +49,8 @@ class SuggestionBox extends Component {
 
   closeSuggestions = () => {
     const { showUsersList } = this.props;
-    if(showUsersList)
+    const { removeUser } = this.state;
+    if(showUsersList && !removeUser)
     this.props.showSuggestionList(false);
   }
 
@@ -102,6 +110,7 @@ class SuggestionBox extends Component {
         className="suggestion-input"
         ref={input => this.search = input}
         onKeyDown={this.checkBlank}
+        placeholder="Search"
       />
     );
   };
