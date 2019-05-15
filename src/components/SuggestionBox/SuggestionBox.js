@@ -5,7 +5,6 @@ import './SuggestionBox.css';
 class SuggestionBox extends Component {
   state = {
     searchString: "",
-    error: "",
     highlight: false
   };
 
@@ -14,43 +13,39 @@ class SuggestionBox extends Component {
     const { addedUserList } = this.props;
     if (!addedUserList.includes(user)) {
       this.setState({
-        searchString: "",
-        error: ""
+        searchString: ""
       });
       this.props.addUser(user);
     } else {
-      this.setState({
-        error: "You have already added this user. Please choose different one"
-      });
+      alert('You have already added this user. Please choose different one');
     }
   };
 
   removeUser = (e, index) => {
     e.preventDefault();
-    this.setState({
-      error: ""
-    });
     this.props.removeUser(index);
   };
 
   handleChange = e => {
     this.setState({
-      searchString: e.target.value,
-      error: ""
-    }, () => {
-      const { searchString, highlight } = this.state;
-      const { addedUserList, removeUser } = this.props;
-      if(addedUserList && addedUserList.length) {
-        if (!searchString && e.keyCode === 8 && !highlight) {
-          this.setState({
-            highlight: true
-          })
-        } else if(!searchString && e.keyCode === 8 && highlight) {
-          removeUser(addedUserList.length - 1);
-        }
-      }
+      searchString: e.target.value
     });
   };
+
+  checkBlank = (e) => {
+    const { searchString, highlight } = this.state;
+    const { addedUserList, removeUser } = this.props;
+    const key = e.which || e.keyCode;
+    if(addedUserList && addedUserList.length) {
+      if (!searchString && key === 8 && !highlight) {
+        this.setState({
+          highlight: true
+        })
+      } else if(!searchString && key === 8 && highlight) {
+        removeUser(addedUserList.length - 1);
+      }
+    }
+  }
 
   renderSuggestionList = () => {
     const { userLists, showUsersList } = this.props;
@@ -94,6 +89,7 @@ class SuggestionBox extends Component {
         onFocus={() => this.props.showSuggestionList(true)}
         className="suggestion-input"
         ref={input => this.search = input}
+        onKeyDown={this.checkBlank}
       />
     );
   };
@@ -148,7 +144,6 @@ class SuggestionBox extends Component {
     return (
       <div className="suggestion-container">
         {this.renderChildren()}
-        <p className="suggestion-error">{this.state.error}</p>
       </div>
     );
   }
