@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ClickOutside from "react-simple-click-outside";
 import { Remove } from "../../images";
-import './SuggestionBox.css';
+import "./SuggestionBox.css";
 
 class SuggestionBox extends Component {
   state = {
@@ -21,17 +21,20 @@ class SuggestionBox extends Component {
       });
       this.props.addUser(user);
     } else {
-      alert('You have already added this user. Please choose different one');
+      alert("You have already added this user. Please choose different one");
     }
   };
 
   removeUser = (e, index) => {
     e.preventDefault();
-    this.setState({
-      removeUser: true
-    }, () => {
-      this.props.removeUser(index);
-    });
+    this.setState(
+      {
+        removeUser: true
+      },
+      () => {
+        this.props.removeUser(index);
+      }
+    );
   };
 
   handleChange = e => {
@@ -41,31 +44,30 @@ class SuggestionBox extends Component {
     });
   };
 
-  resetHighlight = (val) => {
+  resetHighlight = val => {
     this.setState({
       highlight: val
-    })
-  }
+    });
+  };
 
   closeSuggestions = () => {
     const { showUsersList } = this.props;
     const { removeUser } = this.state;
-    if(showUsersList && !removeUser)
-    this.props.showSuggestionList(false);
-  }
+    if (showUsersList && !removeUser) this.props.showSuggestionList(false);
+  };
 
-  checkBlank = (e) => {
+  checkBlank = e => {
     const { searchString, highlight } = this.state;
     const { addedUserList, removeUser } = this.props;
     const key = e.which || e.keyCode;
-    if(addedUserList && addedUserList.length) {
+    if (addedUserList && addedUserList.length) {
       if (!searchString && key === 8 && !highlight) {
         this.resetHighlight(true);
-      } else if(!searchString && key === 8 && highlight) {
+      } else if (!searchString && key === 8 && highlight) {
         removeUser(addedUserList.length - 1);
       }
     }
-  }
+  };
 
   renderSuggestionList = () => {
     const { userLists, showUsersList } = this.props;
@@ -84,11 +86,17 @@ class SuggestionBox extends Component {
         .map(list => {
           const { name, image, email, id } = list;
           return (
-            <li onClick={e => this.addUser(e, list)} key={`list${id}`} className="suggestion-list">
+            <li
+              onClick={e => this.addUser(e, list)}
+              key={`list${id}`}
+              className="suggestion-list"
+            >
               <span className="suggestion-list-image">
                 <img src={image} alt={name} />
               </span>
-              <span className="suggestion-list-name">{name}</span>
+              <span className="suggestion-list-name">
+                {name}
+              </span>
               <span className="suggestion-list-email">{email}</span>
             </li>
           );
@@ -108,7 +116,7 @@ class SuggestionBox extends Component {
         onChange={this.handleChange}
         onFocus={() => this.props.showSuggestionList(true)}
         className="suggestion-input"
-        ref={input => this.search = input}
+        ref={input => (this.search = input)}
         onKeyDown={this.checkBlank}
         placeholder="Search"
       />
@@ -118,13 +126,15 @@ class SuggestionBox extends Component {
   renderChips = () => {
     const { addedUserList } = this.props;
     const { highlight } = this.state;
-    
+
     if (addedUserList && addedUserList.length) {
       return addedUserList.map((list, index) => {
         const { name, image, id } = list;
-        let chipClass = 'suggestion-chip';
-        if(addedUserList.length - 1 === index) {
-          chipClass = highlight ? 'suggestion-chip highlight' : 'suggestion-chip';
+        let chipClass = "suggestion-chip";
+        if (addedUserList.length - 1 === index) {
+          chipClass = highlight
+            ? "suggestion-chip highlight"
+            : "suggestion-chip";
         }
         return (
           <div key={`chip${id}`} className={chipClass}>
@@ -132,7 +142,11 @@ class SuggestionBox extends Component {
               <img src={image} alt={name} />
             </span>
             <span className="suggestion-chip-name">{name}</span>
-            <span onClick={e => this.removeUser(e, index)} className="suggestion-chip-remove" title="Remove">
+            <span
+              onClick={e => this.removeUser(e, index)}
+              className="suggestion-chip-remove"
+              title="Remove"
+            >
               <img src={Remove} alt="remove" />
             </span>
           </div>
@@ -164,9 +178,7 @@ class SuggestionBox extends Component {
   render() {
     return (
       <ClickOutside close={this.closeSuggestions}>
-        <div className="suggestion-container">
-          {this.renderChildren()}
-        </div>
+        <div className="suggestion-container">{this.renderChildren()}</div>
       </ClickOutside>
     );
   }

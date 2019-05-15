@@ -6,6 +6,7 @@
   --list-email: #999;
   --white: #fff;
   --highlight: #ffd9d9;
+  --black: #000;
 }
 
 * {
@@ -129,6 +130,11 @@ ul {
   font-size: 15px;
   flex: 1;
   text-align: left;
+}
+
+.suggestion-list-name.highlight {
+  color: var(--black);
+  font-weight: bold;
 }
 
 .suggestion-list-email {
