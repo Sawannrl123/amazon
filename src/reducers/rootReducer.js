@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import simpleReducer from './simpleReducer';
-import suggestionBox from './suggestionBox';
+import main from './mainReducer';
+import header from './headerReducer';
 
 export default combineReducers({
-  simpleReducer,
-  suggestionBox
+  main,
+  header,
 });

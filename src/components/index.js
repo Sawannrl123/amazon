@@ -1,1 +1,1 @@
-export { default as SuggestionBox } from './SuggestionBox';
+export { default as Header } from './Header';
