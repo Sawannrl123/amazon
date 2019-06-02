@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Route, Switch
+} from 'react-router-dom';
 
-import { updateDimensions } from './actions/main/action'
+import {
+  BodyContainer
+} from './AppStyle';
 
-import { Header } from "./components";
+import { updateDimensions, handleScroll } from './actions/main/action'
+
+import { Header, ScrollTop } from "./components";
+import { Home, Innovation, Connect, Technology, NotFound } from './pages';
 
 
 class App extends Component {
@@ -17,21 +25,44 @@ class App extends Component {
     this.props.updateDimensions(dimension);
   }
 
+  handleScroll = () => {
+    this.props.handleScroll(window.scrollY);
+  };
+
   componentWillMount = () => {
     this.updateDimensions();
+    this.handleScroll();
   }
 
   componentDidMount = () => {
     window.addEventListener("resize", this.updateDimensions);
+    window.addEventListener('scroll', this.handleScroll);
   }
 
   componentWillUnmount = () => {
     window.removeEventListener("resize", this.updateDimensions);
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  scrollToTop = () => {
+    window.scrollTo({top: 0, behavior: 'smooth'});
   }
 
   render() {
     return (
-      <Header />
+      <Router>
+        <Header />
+        <BodyContainer>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/innovation" component={Innovation} />
+            <Route exact path="/technology" component={Technology} />
+            <Route exact path="/connect" component={Connect} />
+            <Route component={NotFound} />
+          </Switch>
+        </BodyContainer>
+        {this.props.scrollY > 100 ? <ScrollTop onClick={this.scrollToTop}/> : null}
+      </Router>
     );
   }
 
@@ -39,11 +70,12 @@ class App extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   ...ownProps,
-  ...state.app
+  ...state.main
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateDimensions: (dimension) => dispatch(updateDimensions(dimension))
+  updateDimensions: (dimension) => dispatch(updateDimensions(dimension)),
+  handleScroll: (scrollY) => dispatch(handleScroll(scrollY)),
 });
 
 export default connect(

@@ -11,6 +11,7 @@ export const HeaderContainer = styled.header`
   right: 0;
   box-shadow: ${BOTTOM_SHADOW};
   background-color: ${PRIMARY_COLOR};
+  z-index: 1;
 `;
 
 export const HeaderWrapper = styled.div`
@@ -27,6 +28,44 @@ export const Menus = styled.ul`
 
 export const Menu = styled.li`
   padding: 0 7px;
+`;
+
+export const MobileMenu = styled.div`
+  padding: 1rem;
+  line-height: 1;
+  font-size: 0;
+  cursor: pointer;
+`;
+
+export const MenuContainer = styled.div`
+  &.mobile-menu {
+    ul {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: ${PRIMARY_COLOR};
+      flex-direction: column;
+      padding: 2rem;
+      justify-content: center;
+      z-index: 1;
+      li {
+        padding: 1rem 7px;
+      }
+    }
+  }
+`;
+
+export const MenuClose = styled.div`
+  font-size: 0;
+  line-height: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  padding: 2rem;
+
 `;
 
 export const LogoLink = styled(NavLink)`

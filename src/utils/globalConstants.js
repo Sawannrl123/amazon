@@ -5,3 +5,4 @@ export const TEXT_COLOR = '#333';
 export const BOTTOM_SHADOW = '0 0 8px 2px rgba(0, 0, 0, .3)';
 export const SHADOW = '0 0 5px rgba(0, 0, 0, .3)';
 export const PRIMARY_COLOR = 'palevioletred';
+export const GRAY_COLOR = '#ddd';

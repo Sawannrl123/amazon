@@ -11,6 +11,7 @@ const menus = [
 const initialState = {
   menus,
   activeMenu: menus[0],
+  mobileMenuState: false,
 }
 
 export default (state = initialState, action) => {
@@ -20,6 +21,11 @@ export default (state = initialState, action) => {
         ...state,
         activeMenu: action.menu
       };
+    case actions.TOGGLE_MENU:
+        return {
+          ...state,
+          mobileMenuState: !state.mobileMenuState,
+        };
     default:
       return state;
   }

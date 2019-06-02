@@ -4,7 +4,8 @@ const initialState = {
   dimension: {
     width: window.innerWidth,
     height: window.innerHeight
-  }
+  },
+  scrollY: window.screenY
 };
 
 export default (state = initialState, action) => {
@@ -13,6 +14,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         dimension: action.dimension
+      };
+    case actions.SCROLL_Y:
+      return {
+        ...state,
+        scrollY: action.scrollY
       };
     default:
       return state;

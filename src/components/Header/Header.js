@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 
 import { Loading } from "../Loading";
-import { APP_NAME } from "../../utils/globalConstants";
+import { APP_NAME, WHITE_COLOR } from "../../utils/globalConstants";
+
+import Icon from "../Icon";
 
 import {
   HeaderContainer,
@@ -11,27 +13,36 @@ import {
   LogoLink,
   Logo,
   SubLogo,
-  MenuLink
+  MenuLink,
+  MobileMenu,
+  MenuContainer,
+  MenuClose
 } from "./HeaderStyle";
 
 import { Container } from "../common";
 
-
-
 class Header extends Component {
-  
+  changeMenu = menu => {
+    const { dimension } = this.props;
+    const { width } = dimension;
+    this.props.changeMenu(menu);
+    if (width < 769) this.props.toggleMobileMenu();
+  };
+
   renderMenu = () => {
-    const { menus, dimension } = this.props;
-    const { width } = dimension; 
+    const { menus, dimension, mobileMenuState } = this.props;
+    const { width } = dimension;
+    let mobileMenuClass = null;
+    let closeIcon = null;
     const menuItems = menus.map(menu => {
       const { title, slug } = menu;
       return (
         <Menu key={`menu_${slug}`}>
           <MenuLink
-            exact={slug === "home" || '/' ? true : false}
+            exact={slug === "home" || "/" ? true : false}
             activeClassName="is-active"
             to={slug === "home" ? "/" : `/${slug}`}
-            onClick={() => this.props.changeMenu(menu)}
+            onClick={() => this.changeMenu(menu)}
           >
             {title}
           </MenuLink>
@@ -39,14 +50,39 @@ class Header extends Component {
       );
     });
 
-    if (width > 768) {
-      return <Menus>{menuItems}</Menus>;
+    if (width < 769) {
+      mobileMenuClass = "mobile-menu";
+      closeIcon = (
+        <MenuClose onClick={this.props.toggleMobileMenu} key="close">
+          <Icon name="close" color={WHITE_COLOR} size={24} />
+        </MenuClose>
+      );
     }
 
-    return (
-      <div>Sawan</div>
-    )
-    
+    let menu = [];
+
+    if (mobileMenuState) {
+      menu = [
+        <Menus key="menus">
+          {closeIcon}
+          {menuItems}
+        </Menus>
+      ];
+    }
+
+    if (width > 768) {
+      menu = [<Menus key="menus">{menuItems}</Menus>];
+    }
+
+    if (width < 769) {
+      menu.push(
+        <MobileMenu onClick={this.props.toggleMobileMenu} key="menu">
+          <Icon name="menu" color={WHITE_COLOR} size={24} />
+        </MobileMenu>
+      );
+    }
+
+    return <MenuContainer className={mobileMenuClass}>{menu}</MenuContainer>;
   };
 
   renderLogo = () => {

@@ -1,0 +1,2 @@
+export const TOGGLE_POPUP = 'TOGGLE_POPUP';
+export const SUBMIT_QUERY = 'SUBMIT_QUERY';
