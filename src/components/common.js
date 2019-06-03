@@ -1,14 +1,39 @@
 import styled, { css } from 'styled-components';
-import { WHITE_COLOR, PRIMARY_COLOR } from '../utils/globalConstants';
+import { WHITE_COLOR, PRIMARY_COLOR, TEXT_COLOR } from '../utils/globalConstants';
+import { Link } from "react-router-dom";
 
-export const Container = styled.section`
+import { 
+  Button
+ } from '../components/Button/ButtonStyle';
+
+const CommonContainer = css`
   max-width: 1280px;
   padding: ${props => props.padding ? props.padding : '1rem'};
   margin: 0 auto;
   width: 100%;
 `;
 
+export const Container = styled.section`
+  ${CommonContainer}
+`;
+
+export const CenterElement = styled.section`
+  ${CommonContainer};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  min-height: ${props => props.fullHeight ? 'calc(100vh - 234px)' : 'auto'};
+  @media only screen and (min-width: 769px) {
+    min-height: ${props => props.fullHeight ? 'calc(100vh - 183px)' : 'auto'};
+  }
+`;
+
 export const PageContainer = styled.div`
+  min-height: calc(100vh - 234px);
+  @media only screen and (min-width: 769px) {
+    min-height: calc(100vh - 183px);
+  }
 `;
 
 export const SiteLink = css`
@@ -54,4 +79,33 @@ export const CustomScroller = css`
   {
     background-color: ${PRIMARY_COLOR};
   }
+`;
+
+export const PageInfo = styled.div`
+  text-align: center;
+`;
+
+export const PageTitle = styled.h1`
+  font-size: 18px;
+  color: ${TEXT_COLOR};
+  line-height: 1.5;
+  margin-bottom: 10px;
+  @media only screen and (min-width: 769px) {
+    font-size: 24px;
+  }
+`;
+
+export const PageSubtitle = styled.p`
+  font-size: 15px;
+  color: ${TEXT_COLOR};
+  line-height: 1.5;
+  margin-bottom: 50px;
+  @media only screen and (min-width: 769px) {
+    font-size: 18px;
+  }
+`;
+
+export const PageLink = styled(Link)`
+  ${Button};
+  text-decoration: none;
 `;

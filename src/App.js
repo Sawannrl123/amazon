@@ -11,7 +11,7 @@ import {
 
 import { updateDimensions, handleScroll } from './actions/main/action'
 
-import { Header, ScrollTop } from "./components";
+import { Header, ScrollTop, Footer } from "./components";
 import { Home, Innovation, Connect, Technology, NotFound } from './pages';
 
 
@@ -61,6 +61,7 @@ class App extends Component {
             <Route component={NotFound} />
           </Switch>
         </BodyContainer>
+        <Footer />
         {this.props.scrollY > 100 ? <ScrollTop onClick={this.scrollToTop}/> : null}
       </Router>
     );

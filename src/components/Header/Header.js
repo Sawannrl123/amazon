@@ -39,9 +39,9 @@ class Header extends Component {
       return (
         <Menu key={`menu_${slug}`}>
           <MenuLink
-            exact={slug === "home" || "/" ? true : false}
+            exact={slug === "/" ? true : false}
             activeClassName="is-active"
-            to={slug === "home" ? "/" : `/${slug}`}
+            to={slug === "/" ? "/" : `/${slug}`}
             onClick={() => this.changeMenu(menu)}
           >
             {title}

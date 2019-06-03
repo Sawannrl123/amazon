@@ -266,19 +266,17 @@ class Innovation extends Component {
         <SectionContainer>
           <Container>{this.renderTierOne()}</Container>
         </SectionContainer>
-        <SectionContainer>
-          <Container>{this.renderTierTwo()}</Container>
-        </SectionContainer>
         {width < 769 ? (
           <MobileSection>
             <SectionContainer>
-              <Container>{this.renderTierThree()}</Container>
+              <Container>{this.renderTierTwo()}</Container>
             </SectionContainer>
             <SectionContainer>
-              <Container>{this.renderRecommendation()}</Container>
+              <Container>{this.renderTierThree()}</Container>
             </SectionContainer>
+            <Container>{this.renderRecommendation()}</Container>
           </MobileSection>
-        ) : null}
+        ) : <Container>{this.renderTierTwo()}</Container>}
         {this.renderPopup()}
       </PageContainer>
     );

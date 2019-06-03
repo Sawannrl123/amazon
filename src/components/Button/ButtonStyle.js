@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { WHITE_COLOR, PRIMARY_COLOR, GRAY_COLOR } from '../../utils/globalConstants';
 
-export const ButtonContainer = styled.button`
+export const Button = css`
   background-color: transparent;
   border-radius: 3px;
   border: 2px solid ${PRIMARY_COLOR};
@@ -32,4 +32,8 @@ export const ButtonContainer = styled.button`
       border-color: ${GRAY_COLOR};
     }
   `}
+`;
+
+export const ButtonContainer = styled.button`
+  ${Button}
 `;
